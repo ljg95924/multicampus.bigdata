@@ -1,0 +1,10 @@
+a=int(input("첫번쨰 숫자를 입력:"))
+b=int(input("두번쨰 숫자를 입력:"))
+result=a+b
+print(a,"+",b,"=",result)
+result=a-b
+print(a,"-",b,"=",result)
+result=a*b
+print(a,"*",b,"=",result)
+result=a/b
+print(a,"/",b,"=",result)
