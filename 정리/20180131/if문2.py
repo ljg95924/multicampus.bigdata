@@ -1,0 +1,19 @@
+score=int(input("점수를 입력해주세요."))
+if(95>=score):
+    print("A+")
+elif(90>=score):
+    print("A")
+elif(85>=score):
+    print("B+")
+elif(80>=score):
+    print("B")
+elif(75>=score):
+    print("C+")
+elif(70>=score):
+    print("C")
+elif(65>=score):
+    print("D+")
+elif(60>=score):
+    print("D")
+elif(60<score):
+    print("F")
