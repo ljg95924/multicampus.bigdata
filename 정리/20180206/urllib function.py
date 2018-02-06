@@ -8,15 +8,15 @@ for name in os.listdir("C:\\python36"):
     #입력한 경로의 파일과 폴더 목록을 리스트로 반환
     print(name)
 
-#os.mkdir("C:\\python36\\test")#폴더 생성
+os.mkdir("C:\\python36\\test")#폴더 생성
 #for name in os.listdir('C:\\python36'):
-#    print(name)
+   print(name)
 
-#os.makedirs("C:\\temp\\dir1\\dir2\\dir3")
+os.makedirs("C:\\temp\\dir1\\dir2\\dir3")
 # 하위 폴더 포함 폴더를 만들어 준다.
-#print(os.listdir("C:\\temp"))
+print(os.listdir("C:\\temp"))
 
-#print(os.remove("C:\\python36\\test.txt"))
+print(os.remove("C:\\python36\\test.txt"))
 #파일 삭제 , rmdir,removedirs()는 폴더 삭제
 
 print(os.path.isdir("C:\\python36"))
