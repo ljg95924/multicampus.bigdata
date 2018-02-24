@@ -8,12 +8,12 @@ library(ggmap)
 subway_data<-read.csv('subway_population.csv',header=T,stringsAsFactors = F,sep = '\t')
 #지하철승하차1.csv파일을 불러오는데 header는 True(= 맨 앞 컬럼명 을 가져올지 안가져올지),sep(=separate) \t 로 분리해서 불러옴
 subway_data$total_population <- subway_data$승차총승객수 + subway_data$하차총승객수
-
-subway_data2<-subway_data%>%
-  group_by(역명)%>%
-  summarise(total=sum(total_population))%>%
-  arrange(desc(total))%>%
-  head(40)
+#승차,하차를 더하여 total_population(총 승하차)변수에 저장
+subway_data2<-subway_data%>%   
+  group_by(역명)%>% #역별로 분리
+  summarise(total=sum(total_population))%>% #날짜 별로의 총승하차 수를 다 더해서 total에 저장
+  arrange(desc(total))%>% #total을 기준으로 내림차순 정렬
+  head(40)#상위40개만 
 
 
 #subway_data2<-subway_data%>%
@@ -21,17 +21,9 @@ subway_data2<-subway_data%>%
 #  summarise(total=sum(승하차))%>% # 총승하차 인원을 더함
 #  arrange(desc(total))%>%#총 승하차인원이 높은순으로 정렬
 #  head(40)#상위 40개만
+
 subway_data2
-#subway_data2_split<-split(subway_data2$역명,"(")
 
-#subway_data2_split
-#data.frame(subway_data2_split)
-
-#bb<-as.matrix(subway_data2)
-#bb
-#class(bb)
-#plot(bb,type='0',col='red')
-#barplot(bb)
 dev.new()#새창 띄우기(그래프 그려주는 창)
 
 ggplot(data=subway_data2,aes(x=reorder(역명,total),y=total))+geom_point()+theme(text=element_text(size=12),axis.text.x=element_text(angle=90,hjust=1))
@@ -61,3 +53,4 @@ loc<-read.csv('f_d.csv',header=T)
 kor<-get_map('seoul',zoom=11,maptype = 'roadmap')
 kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$Y좌표.WGS.,y=loc$X좌표.WGS.),size=6,alpha=0.7,color='green')
 kor.map+geom_text(data=loc,aes(x=loc$Y좌표.WGS.,y = loc$X좌표.WGS.+0.005,label=""),size=3)
+ggsave('subway_map.png',scale = 1,width=7,height=4,dpi=1000)
