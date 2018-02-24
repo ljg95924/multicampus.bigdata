@@ -2,20 +2,24 @@ install.packages('dplyr')
 install.packages('ggplot2')
 library(dplyr)
 library(ggplot2)
+library(ggmap)
 
 subway_data<-read.csv('subway_population.csv',header=T,stringsAsFactors = F,sep = '\t')
 #지하철승하차1.csv파일을 불러오는데 header는 True(= 맨 앞 컬럼명 을 가져올지 안가져올지),sep(=separate) \t 로 분리해서 불러옴
-subway_data
-
-subway_data%>%
-  group_by(역명)%>%
-  summarise(total_population)
+subway_data$total_population <- subway_data$승차총승객수 + subway_data$하차총승객수
 
 subway_data2<-subway_data%>%
-  group_by(역명)%>%  #역별로 분리
-  summarise(total=sum(승하차))%>% # 총승하차 인원을 더함
-  arrange(desc(total))%>%#총 승하차인원이 높은순으로 정렬
-  head(40)#상위 40개만
+  group_by(역명)%>%
+  summarise(total=sum(total_population))%>%
+  arrange(desc(total))%>%
+  head(40)
+
+
+#subway_data2<-subway_data%>%
+#  group_by(역명)%>%  #역별로 분리
+#  summarise(total=sum(승하차))%>% # 총승하차 인원을 더함
+#  arrange(desc(total))%>%#총 승하차인원이 높은순으로 정렬
+#  head(40)#상위 40개만
 subway_data2
 #subway_data2_split<-split(subway_data2$역명,"(")
 
@@ -51,4 +55,8 @@ f_d<-unique(final_data)#중복제거
 f_d
 write.csv(f_d,file='f_d.csv')
 #final_data을 csv 파일로 저장
+loc<-read.csv('f_d.csv',header=T)
 
+kor<-get_map('seoul',zoom=11,maptype = 'roadmap')
+kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$X좌표.WGS.,y=loc$Y좌표.WGS.),size=3,alpha=0.7)
+kor.map+geom_text(data=loc,aes(x=loc$X좌표.WGS.,y = loc$Y좌표.WGS.+0.005,label=''))
