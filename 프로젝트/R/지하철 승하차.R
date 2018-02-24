@@ -27,7 +27,7 @@ subway_data2
 dev.new()#새창 띄우기(그래프 그려주는 창)
 
 ggplot(data=subway_data2,aes(x=reorder(역명,total),y=total))+geom_point()+theme(text=element_text(size=12),axis.text.x=element_text(angle=90,hjust=1))
-#subway_data2데이터를 쓰며, x축은 역명으로 하되 total로 정렬, y축은 total, 산점도 추가, 텍스트크기 12포인트, x축 텍스트90도 회전 및 정렬
+#subway_data2데이터를 쓰며,x=reorder(역명,total) => x축은 역명으로 하되 total로 정렬, y=total => y축은 total, geom_point() => 산점도 추가, text=element_text(size=12) => 텍스트크기 12포인트, x축 텍스트90도 회전 및 정렬
 ggsave('subway.png',scale = 1,width=7,height=4,dpi=1000)
 #이미지 subway.png로 저장 , scale=그림의 크기, 넓이,높이,dpi=해상도 설정 
 
