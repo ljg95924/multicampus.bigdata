@@ -31,7 +31,7 @@ ggplot(data=subway_data2,aes(x=reorder(역명,total),y=total))+geom_point()+them
 ggsave('subway.png',scale = 1,width=7,height=4,dpi=1000)
 #이미지 subway.png로 저장 , scale=그림의 크기, 넓이,높이,dpi=해상도 설정 
 
-subway_location<-read.csv("지하철위도경도.csv",header =T)
+subway_location<-read.csv("지하철위도경도.csv",header =T) #csv 파일을 읽는다.
 s_l<-subway_location%>%
   select(역명,X좌표.WGS.,Y좌표.WGS.)
 s_l
@@ -41,16 +41,16 @@ s_l
 #f_d<-merge(station_name=subway_data2$역명,total_population=subway_data2$total,LAT=s_l$X좌표.WGS.,LON=s_l$Y좌표.WGS.)
 
 final_data<-subway_data2%>%inner_join(s_l,by='역명') 
-#이너조인사용, 상위 40개 지하철역 좌표값 알기위해서
+#이너조인사용(인터넷 검색gogo) ex) http://gaeko-security-hack.tistory.com/34 , 상위 40개 지하철역 좌표값 알기위해서
 
 final_data
-f_d<-unique(final_data)#중복제거
+f_d<-unique(final_data)#중복된 값 제거
 f_d
 write.csv(f_d,file='f_d.csv')
 #final_data을 csv 파일로 저장
-loc<-read.csv('f_d.csv',header=T)
 
+loc<-read.csv('f_d.csv',header=T)
 kor<-get_map('seoul',zoom=11,maptype = 'roadmap')
-kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$Y좌표.WGS.,y=loc$X좌표.WGS.),size=6,alpha=0.7,color='green')
+kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$Y좌표.WGS.,y=loc$X좌표.WGS.),size=6,alpha=0.7,color='green') 
 kor.map+geom_text(data=loc,aes(x=loc$Y좌표.WGS.,y = loc$X좌표.WGS.+0.005,label=""),size=3)
 ggsave('subway_map.png',scale = 1,width=7,height=4,dpi=1000)
