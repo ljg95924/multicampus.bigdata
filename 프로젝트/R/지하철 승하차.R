@@ -51,6 +51,6 @@ write.csv(f_d,file='f_d.csv')
 
 loc<-read.csv('f_d.csv',header=T)
 kor<-get_map('seoul',zoom=11,maptype = 'roadmap')
-kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$Y좌표.WGS.,y=loc$X좌표.WGS.),size=6,alpha=0.7,color='green') 
+kor.map<-ggmap(kor)+geom_point(data=loc,aes(x=loc$Y좌표.WGS.,y=loc$X좌표.WGS.),size=6,alpha=0.7,color='green')
 kor.map+geom_text(data=loc,aes(x=loc$Y좌표.WGS.,y = loc$X좌표.WGS.+0.005,label=""),size=3)
 ggsave('subway_map.png',scale = 1,width=7,height=4,dpi=1000)
